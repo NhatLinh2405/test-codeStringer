@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+require("../models/user.model");
+
 if (!process.env.MONGO_URL) {
 	throw new Error('Invalid/Missing environment variable: "MONGO_URL"');
 }
