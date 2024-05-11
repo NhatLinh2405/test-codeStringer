@@ -4,7 +4,11 @@ import plugin from 'tailwindcss/plugin'
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {}
+    extend: {
+      boxShadow: {
+        pop: '2px 5px 14px #949494'
+      }
+    }
   },
   plugins: [
     plugin(function ({ addUtilities }) {
