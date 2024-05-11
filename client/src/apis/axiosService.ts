@@ -33,7 +33,7 @@ axiosService.interceptors.response.use(
       if (refreshToken) {
         originalRequest._retry = true
         return axiosService
-          .post('/user/refresh-token', { refreshToken })
+          .post('/users/refresh-token', { refreshToken })
           .then((res) => {
             if (res.data) {
               setItem<string>('accessToken', res.data.accessToken)
@@ -48,7 +48,7 @@ axiosService.interceptors.response.use(
             console.log('err', err)
             removeItem('accessToken')
             removeItem('refreshToken')
-            window.location.href = '/sign-in'
+            window.location.href = '/login'
           })
       }
     }

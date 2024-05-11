@@ -30,15 +30,15 @@ export default function AuthLayout() {
   const isLoginPage = location.pathname === '/login'
 
   return !accessToken ? (
-    <section className='min-h-screen flex-center'>
+    <section className='min-h-dvh flex-center'>
       <video
         playsInline
         autoPlay
         loop
         muted
         src={videoBg}
-        className='fixed inset-0 -z-10 min-w-full max-w-none'
-      ></video>
+        className='fixed inset-0 -z-10 min-w-full max-w-none h-screen'
+      />
       <div className='bg-white bg-opacity-75 rounded-2xl w-full max-w-96 mx-2'>
         <div className='w-full p-4 sm:p-5'>
           <h1 className='text-4xl mb-0 font-bold tracking-wide text-center'>

@@ -12,12 +12,12 @@ export default function HomePage() {
     navigate('/login')
   }
   return (
-    <section className=''>
-      <h1 className='text-5xl font-bold tracking-wide mb-20'>Welcome to Home Page</h1>
+    <section className='w-full md:w-fit'>
+      <h1 className='text-center text-3xl sm:text-5xl font-bold tracking-wide mb-20'>Welcome to Home Page</h1>
 
-      <div className='shadow-pop bg-white p-5 rounded-2xl flex-center-y justify-between gap-8'>
+      <div className='shadow-pop bg-white p-5 flex-col sm:flex-row rounded-2xl flex-center-y sm:justify-between gap-5 sm:gap-8'>
         <img src={profile?.image} alt='' className='w-20 h-20 hover:scale-105 object-cover shadow-pop rounded-xl' />
-        <div className='space-y-2 text-lg max-w-96'>
+        <div className='space-y-2 text-lg sm:max-w-96'>
           <div className='flex gap-1.5'>
             <p className='font-bold'>Name:</p>
             <p className='break-words'>{profile?.name}</p>
@@ -29,7 +29,7 @@ export default function HomePage() {
         </div>
         <button
           onClick={handleLogout}
-          className='ml-auto bg-red-500 flex-center-y text-white rounded-xl hover:scale-105 hover:bg-green-500 px-3 py-2.5 gap-3'
+          className='sm:ml-auto bg-red-500 flex-center-y text-white rounded-xl hover:scale-105 hover:bg-green-500 px-3 py-2.5 gap-3'
         >
           <CiLogout className='text-2xl' />
           Logout
