@@ -1,15 +1,19 @@
 import { sign, verify } from "jsonwebtoken";
 import { JwtPayload } from "../types/jwt";
 
-const signToken = (payload: JwtPayload, expiresIn: string): string => {
-	return sign(payload, process.env.JWT_SECRET as string, { expiresIn });
+const signToken = async (payload: JwtPayload, expiresIn: string): Promise<string> => {
+	return await sign(payload, process.env.JWT_SECRET as string, { expiresIn });
 };
 
-export const createJWT = (_id: string, email: string, name: string) => {
+export const createJWT = async (_id: string, email: string, name: string) => {
 	const payload = { _id, email, name };
+	const [accessToken, refreshToken] = await Promise.all([
+		signToken(payload, String(process.env.ACCESS_TOKEN_EXP)),
+		signToken(payload, String(process.env.REFRESH_TOKEN_EXP)),
+	]);
 	return {
-		accessToken: signToken(payload, String(process.env.ACCESS_TOKEN_EXP)),
-		refreshToken: signToken(payload, String(process.env.REFRESH_TOKEN_EXP)),
+		accessToken,
+		refreshToken,
 	};
 };
 

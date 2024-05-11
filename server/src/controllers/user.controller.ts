@@ -22,7 +22,7 @@ export async function createUser(req: Request, res: Response, next: NextFunction
 			password: bcryptjs.hashSync(password, 10),
 		});
 
-		const { accessToken, refreshToken } = createJWT(newUser._id, newUser.email, newUser.name);
+		const { accessToken, refreshToken } = await createJWT(newUser._id, newUser.email, newUser.name);
 
 		newUser.accessToken = accessToken;
 		newUser.refreshToken = refreshToken;
@@ -63,7 +63,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
 		}
 
 		if (user && bcryptjs.compareSync(password, user.password)) {
-			const { accessToken, refreshToken } = createJWT(user._id, user.email, user.name);
+			const { accessToken, refreshToken } = await createJWT(user._id, user.email, user.name);
 
 			await saveUser(user._id, accessToken, refreshToken);
 			const response = {
@@ -99,7 +99,7 @@ export const loginWithGoogle = async (req: Request, res: Response, next: NextFun
 				password: bcryptjs.hashSync(sub, 10),
 			});
 
-			const { accessToken, refreshToken } = createJWT(newUser._id, newUser.email, newUser.name);
+			const { accessToken, refreshToken } = await createJWT(newUser._id, newUser.email, newUser.name);
 			newUser.accessToken = accessToken;
 			newUser.refreshToken = refreshToken;
 			await newUser.save();
@@ -108,7 +108,7 @@ export const loginWithGoogle = async (req: Request, res: Response, next: NextFun
 				.status(201)
 				.json(handleResponse({ accessToken, refreshToken }, 201, "User created successfully"));
 		}
-		const { accessToken, refreshToken } = createJWT(user._id, user.email, user.name);
+		const { accessToken, refreshToken } = await createJWT(user._id, user.email, user.name);
 
 		await saveUser(user._id, accessToken, refreshToken);
 		return res
@@ -132,7 +132,11 @@ export async function refreshToken(req: Request, res: Response, next: NextFuncti
 			res.status(404).json(handleError({ message: "User not found" }, 404));
 		}
 
-		const { accessToken, refreshToken: newRefreshToken } = createJWT(user._id, user.email, user.name);
+		const { accessToken, refreshToken: newRefreshToken } = await createJWT(
+			user._id,
+			user.email,
+			user.name
+		);
 
 		await saveUser(user._id, accessToken, newRefreshToken);
 
