@@ -13,18 +13,22 @@ export default function HomePage() {
   }
   return (
     <section className='w-full md:w-fit'>
-      <h1 className='text-center text-3xl sm:text-5xl font-bold tracking-wide mb-20'>Welcome to Home Page</h1>
+      <h1 className='mb-20 text-3xl font-bold tracking-wide text-center sm:text-5xl'>Welcome to Home Page</h1>
 
-      <div className='shadow-pop bg-white p-5 flex-col sm:flex-row rounded-2xl flex-center-y sm:justify-between gap-5 sm:gap-8'>
-        <img src={profile?.image} alt='' className='w-20 h-20 hover:scale-105 object-cover shadow-pop rounded-xl' />
+      <div className='flex-col gap-5 p-5 bg-white shadow-pop sm:flex-row rounded-2xl flex-center-y sm:justify-between sm:gap-8'>
+        <img
+          src={profile?.image || 'https://res.cloudinary.com/azurestore/image/upload/v1695735133/avatar_sialno.png'}
+          alt=''
+          className='object-cover w-20 h-20 hover:scale-105 shadow-pop rounded-xl'
+        />
         <div className='space-y-2 text-lg sm:max-w-96'>
           <div className='flex gap-1.5'>
             <p className='font-bold'>Name:</p>
-            <p className='break-words'>{profile?.name}</p>
+            <p className='break-words'>{profile?.name || 'Loading...'}</p>
           </div>
           <div className='flex gap-1.5'>
             <p className='font-bold'>Email:</p>
-            <p className='break-words'>{profile?.email}</p>
+            <p className='break-words'>{profile?.email || 'Loading...'}</p>
           </div>
         </div>
         <button

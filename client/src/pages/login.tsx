@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiFillEye, AiFillEyeInvisible, AiFillUnlock } from 'react-icons/ai'
+import { AiFillEye, AiFillEyeInvisible, AiFillUnlock, AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { MdPerson } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -13,6 +13,7 @@ import { signInSchemaZ } from '../utils/zSchema'
 
 export default function LoginPage() {
   const [show, setShow] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const {
@@ -26,11 +27,13 @@ export default function LoginPage() {
   const submitHandle = useCallback(
     async (values: z.infer<typeof signInSchemaZ>) => {
       try {
+        setLoading(true)
         const res = await userApi.login(values)
         if (res.data) {
           toastSuccess(res.message)
           handleSaveUser(res.data.accessToken, res.data.refreshToken)
           navigate('/')
+          setLoading(false)
         }
       } catch (error) {
         toastError((error as IError).message)
@@ -71,9 +74,11 @@ export default function LoginPage() {
           </div>
         </div>
         <button
+          disabled={loading}
           type='submit'
-          className='w-full py-2 mt-5 text-xl font-bold tracking-wider text-white rounded-2xl bg-sky-600 hover:scale-105 md:py-3'
+          className={`${loading && 'bg-opacity-55 cursor-not-allowed'} w-full py-2 mt-5 text-xl font-bold tracking-wider text-white rounded-2xl bg-sky-600 hover:scale-105 md:py-3`}
         >
+          {loading && <AiOutlineLoading3Quarters className='inline-block mr-2 text-xl animate-spin' />}
           Login
         </button>
       </form>

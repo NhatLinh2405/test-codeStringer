@@ -1,4 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
@@ -8,18 +9,21 @@ import { getItem, handleSaveUser } from '../../utils/localstoreHandle'
 import { toastSuccess } from '../../utils/toast'
 
 export default function AuthLayout() {
+  const [loading, setLoading] = useState<boolean>(false)
   const accessToken = getItem('accessToken')
   const location = useLocation()
   const navigate = useNavigate()
 
   const handleLoginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      setLoading(true)
       try {
         const res = await userApi.loginWithGoogle(tokenResponse.access_token)
         if (res.data) {
           navigate('/')
           handleSaveUser(res.data.accessToken, res.data.refreshToken)
           toastSuccess(res.message)
+          setLoading(false)
         }
       } catch (error) {
         toast.error((error as Error).message)
@@ -59,9 +63,10 @@ export default function AuthLayout() {
           </div>
           <div className='flex-center'>
             <button
+              disabled={loading}
               type='button'
               onClick={() => handleLoginWithGoogle()}
-              className='p-2 bg-white border-2 border-blue-400 rounded-full shadow-pop'
+              className={`${loading && 'cursor-not-allowed bg-opacity-55'} p-2 bg-white border-2 border-blue-400 rounded-full shadow-pop`}
             >
               <FcGoogle className='text-4xl hover:scale-105' />
             </button>
