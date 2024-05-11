@@ -9,24 +9,32 @@ import { userApi } from '../apis/user.api'
 import InputField from '../components/form/inputField'
 import { handleSaveUser } from '../utils/localstoreHandle'
 import { toastError, toastSuccess } from '../utils/toast'
-import { signInSchemaZ } from '../utils/zSchema'
+import { registerSchemaZ } from '../utils/zSchema'
 
-export default function LoginPage() {
-  const [show, setShow] = useState<boolean>(false)
+export interface IShow {
+  password: boolean
+  confirmPassword: boolean
+}
+
+export default function RegisterPage() {
+  const [show, setShow] = useState<IShow>({
+    password: false,
+    confirmPassword: false
+  })
   const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<z.infer<typeof signInSchemaZ>>({
-    resolver: zodResolver(signInSchemaZ)
+  } = useForm<z.infer<typeof registerSchemaZ>>({
+    resolver: zodResolver(registerSchemaZ)
   })
 
   const submitHandle = useCallback(
-    async (values: z.infer<typeof signInSchemaZ>) => {
+    async (values: z.infer<typeof registerSchemaZ>) => {
       try {
-        const res = await userApi.login(values)
+        const res = await userApi.register(values)
         if (res.data) {
           toastSuccess(res.message)
           handleSaveUser(res.data.accessToken, res.data.refreshToken)
@@ -45,8 +53,16 @@ export default function LoginPage() {
         <div className='space-y-1.5'>
           <InputField
             autoFocus
+            name='name'
+            placeholder='Ex: Nhat Linh'
+            register={register}
+            Icon={MdPerson}
+            error={errors.name?.message}
+          />
+          <InputField
+            autoFocus
             name='email'
-            placeholder='Ex: john@gmail.com'
+            placeholder='Ex: linh@gmail.com'
             register={register}
             Icon={MdPerson}
             error={errors.email?.message}
@@ -55,14 +71,47 @@ export default function LoginPage() {
           <div className='relative'>
             <InputField
               name='password'
-              type={show ? 'text' : 'password'}
+              type={show.password ? 'text' : 'password'}
               placeholder='Ví dụ: 12345678..'
               register={register}
               Icon={AiFillUnlock}
               error={errors.password?.message}
             />
-            <span onClick={() => setShow(!show)}>
-              {show ? (
+
+            <span
+              onClick={() =>
+                setShow({
+                  ...show,
+                  password: !show.password
+                })
+              }
+            >
+              {show.password ? (
+                <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
+              ) : (
+                <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
+              )}
+            </span>
+          </div>
+          <div className='relative'>
+            <InputField
+              name='confirmPassword'
+              type={show.confirmPassword ? 'text' : 'password'}
+              placeholder='Ví dụ: 12345678..'
+              register={register}
+              Icon={AiFillUnlock}
+              error={errors.confirmPassword?.message}
+            />
+
+            <span
+              onClick={() =>
+                setShow({
+                  ...show,
+                  confirmPassword: !show.confirmPassword
+                })
+              }
+            >
+              {show.confirmPassword ? (
                 <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
               ) : (
                 <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
@@ -74,7 +123,7 @@ export default function LoginPage() {
           type='submit'
           className='w-full py-2 mt-5 text-xl font-bold tracking-wider text-white rounded-2xl bg-sky-600 hover:scale-105 md:py-3'
         >
-          Login
+          Register
         </button>
       </form>
     </div>

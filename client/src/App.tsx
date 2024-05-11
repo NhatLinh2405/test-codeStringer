@@ -2,6 +2,7 @@ import { Toaster } from 'react-hot-toast'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout, ProtectLayout } from './components/layouts'
 import { HomePage, LoginPage } from './pages'
+import RegisterPage from './pages/register'
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />
       }
     ]
   },

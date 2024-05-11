@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const signUpSchemaZ = z
+const registerSchemaZ = z
   .object({
     name: z.string({ required_error: 'Please enter your name' }).min(6, {
       message: 'Name must be at least 6 characters'
@@ -27,4 +27,4 @@ const signInSchemaZ = z.object({
   password: z.string().min(8, { message: 'Password must be at least 8 characters' })
 })
 
-export { signInSchemaZ, signUpSchemaZ }
+export { registerSchemaZ, signInSchemaZ }

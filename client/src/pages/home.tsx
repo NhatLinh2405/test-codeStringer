@@ -17,13 +17,15 @@ export default function HomePage() {
 
       <div className='shadow-pop bg-white p-5 rounded-2xl flex-center-y justify-between gap-8'>
         <img src={profile?.image} alt='' className='w-20 h-20 hover:scale-105 object-cover shadow-pop rounded-xl' />
-        <div className='space-y-2 text-lg'>
-          <p className=''>
-            <span className='font-bold'>Name:</span> {profile?.name}
-          </p>
-          <p className=''>
-            <span className='font-bold'>Email:</span> {profile?.email}
-          </p>
+        <div className='space-y-2 text-lg max-w-96'>
+          <div className='flex gap-1.5'>
+            <p className='font-bold'>Name:</p>
+            <p className='break-words'>{profile?.name}</p>
+          </div>
+          <div className='flex gap-1.5'>
+            <p className='font-bold'>Email:</p>
+            <p className='break-words'>{profile?.email}</p>
+          </div>
         </div>
         <button
           onClick={handleLogout}
