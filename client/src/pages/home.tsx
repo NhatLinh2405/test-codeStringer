@@ -13,7 +13,7 @@ export default function HomePage() {
   }
   return (
     <section className='w-full md:w-fit'>
-      <h1 className='mb-20 text-3xl font-bold tracking-wide text-center sm:text-5xl'>Welcome to Home Page</h1>
+      <h1 className='text-3xl font-bold tracking-wide text-center mb-14 sm:text-5xl'>Welcome to Home</h1>
 
       <div className='flex-col gap-5 p-5 bg-white shadow-pop sm:flex-row rounded-2xl flex-center-y sm:justify-between sm:gap-8'>
         <img
