@@ -83,7 +83,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
 export const loginWithGoogle = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { email, name, picture, sub } = await axios
-			.get("https://www.googleapis.com/oauth2/v3/tokeninfo", {
+			.get("https://www.googleapis.com/oauth2/v3/userinfo", {
 				headers: {
 					Authorization: `Bearer ${req.body.tokenId}`,
 				},
