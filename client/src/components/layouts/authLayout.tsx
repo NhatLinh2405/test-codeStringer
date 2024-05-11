@@ -1,14 +1,31 @@
+import { useGoogleLogin } from '@react-oauth/google'
+import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { userApi } from '../../apis/user.api'
 import videoBg from '../../assets/videos/grid.mp4'
-import { getItem } from '../../utils/localstoreHandle'
+import { getItem, handleSaveUser } from '../../utils/localstoreHandle'
+import { toastSuccess } from '../../utils/toast'
 
 export default function AuthLayout() {
   const accessToken = getItem('accessToken')
   const location = useLocation()
-  const handleLoginWithGg = () => {
-    console.log('login with google')
-  }
+  const navigate = useNavigate()
+
+  const handleLoginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await userApi.loginWithGoogle(tokenResponse.access_token)
+        if (res.data) {
+          navigate('/')
+          handleSaveUser(res.data.accessToken, res.data.refreshToken)
+          toastSuccess(res.message)
+        }
+      } catch (error) {
+        toast.error((error as Error).message)
+      }
+    }
+  })
 
   const isLoginPage = location.pathname === '/login'
 
@@ -43,7 +60,7 @@ export default function AuthLayout() {
           <div className='flex-center'>
             <button
               type='button'
-              onClick={handleLoginWithGg}
+              onClick={() => handleLoginWithGoogle()}
               className='rounded-full border-2 bg-white border-blue-400 p-2 shadow-pop'
             >
               <FcGoogle className='text-4xl hover:scale-105' />

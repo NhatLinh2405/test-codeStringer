@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Toaster } from 'react-hot-toast'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout, ProtectLayout } from './components/layouts'
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID as string}>
       <RouterProvider router={router} />
       <Toaster
         position='top-center'
@@ -42,7 +43,7 @@ function App() {
           }
         }}
       />
-    </>
+    </GoogleOAuthProvider>
   )
 }
 

@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from 'axios'
 import { getItem, removeItem, setItem } from '../utils/localstoreHandle'
 
 const axiosService = axios.create({
-  baseURL: 'http://localhost:8000/api/v1'
+  baseURL: import.meta.env.VITE_PUBLIC_API
 })
 
 axiosService.interceptors.request.use(
