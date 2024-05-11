@@ -23,10 +23,11 @@ export default function AuthLayout() {
           navigate('/')
           handleSaveUser(res.data.accessToken, res.data.refreshToken)
           toastSuccess(res.message)
-          setLoading(false)
         }
       } catch (error) {
         toast.error((error as Error).message)
+      } finally {
+        setLoading(false)
       }
     }
   })

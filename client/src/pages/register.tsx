@@ -41,10 +41,11 @@ export default function RegisterPage() {
           toastSuccess(res.message)
           handleSaveUser(res.data.accessToken, res.data.refreshToken)
           navigate('/')
-          setLoading(false)
         }
       } catch (error) {
         toastError((error as IError).message)
+      } finally {
+        setLoading(false)
       }
     },
     [navigate]
