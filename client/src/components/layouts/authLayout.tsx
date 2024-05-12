@@ -1,6 +1,7 @@
 import { useGoogleLogin } from '@react-oauth/google'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { userApi } from '../../apis/user.api'
@@ -62,14 +63,19 @@ export default function AuthLayout() {
             </p>
             <div className='w-full h-1 bg-sky-500' />
           </div>
-          <div className='flex-center'>
+          <div className='relative flex-center'>
             <button
               disabled={loading}
               type='button'
               onClick={() => handleLoginWithGoogle()}
-              className={`${loading && 'cursor-not-allowed bg-opacity-55'} p-2 bg-white border-2 border-blue-400 rounded-full shadow-pop`}
+              className={`${loading && 'cursor-not-allowed'} p-2 bg-white border-2 border-blue-400 rounded-full shadow-pop`}
             >
-              <FcGoogle className='text-4xl hover:scale-105' />
+              <FcGoogle className={`${loading && ' opacity-55'} text-4xl hover:scale-105`} />
+              {loading && (
+                <div className='absolute-center'>
+                  <AiOutlineLoading3Quarters className='text-xl animate-spin' />
+                </div>
+              )}
             </button>
           </div>
           <p className='mt-4 text-lg text-center'>
