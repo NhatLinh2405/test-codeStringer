@@ -13,22 +13,22 @@ export default function HomePage() {
   }
   return (
     <section className='w-full md:w-fit'>
-      <h1 className='text-3xl font-bold tracking-wide text-center text-white mb-14 sm:text-5xl'>Welcome to Home</h1>
+      <h1 className='text-3xl font-bold tracking-wide text-center text-white mb-14 sm:text-5xl'>Welcome to Home </h1>
 
-      <div className='flex-col gap-5 p-5 bg-white shadow-pop sm:flex-row rounded-2xl flex-center-y sm:justify-between sm:gap-8'>
+      <div className='flex-col gap-5 p-5 bg-white shadow-pop sm:flex-row rounded-2xl flex-center-y sm:justify-between md:gap-8 lg:min-w-[40rem]'>
         <img
           src={profile?.image || 'https://res.cloudinary.com/azurestore/image/upload/v1695735133/avatar_sialno.png'}
           alt=''
           className='object-cover w-20 h-20 hover:scale-105 shadow-pop rounded-xl'
         />
-        <div className='space-y-2 text-lg sm:max-w-96'>
-          <div className='flex gap-1.5'>
+        <div className='w-full space-y-2 text-lg'>
+          <div className='flex flex-wrap md:flex-nowrap gap-1.5'>
             <p className='font-bold'>Name:</p>
-            <p className='break-words'>{profile?.name || 'Loading...'}</p>
+            <p className='w-full break-words sm:max-w-96 xl:max-w-72'>{profile?.name || 'Loading...'}</p>
           </div>
-          <div className='flex gap-1.5'>
+          <div className='flex flex-wrap md:flex-nowrap gap-1.5'>
             <p className='font-bold'>Email:</p>
-            <p className='break-words'>{profile?.email || 'Loading...'}</p>
+            <p className='w-full break-words sm:max-w-96 xl:max-w-72'>{profile?.email || 'Loading...'}</p>
           </div>
         </div>
         <button
