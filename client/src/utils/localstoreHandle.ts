@@ -4,7 +4,13 @@ function setItem<T>(key: string, value: T) {
 
 function getItem(key: string) {
   const value = localStorage.getItem(key)
-  return value ? JSON.parse(value) : null
+  try {
+    return value ? JSON.parse(value) : null
+  } catch (error) {
+    removeItem('accessToken')
+    removeItem('refreshToken')
+    return null
+  }
 }
 
 function removeItem(key: string) {
