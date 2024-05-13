@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiFillEye, AiFillEyeInvisible, AiFillUnlock, AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { AiFillEye, AiFillEyeInvisible, AiFillUnlock, AiOutlineLoading3Quarters, AiOutlineMail } from 'react-icons/ai'
 import { MdPerson } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -27,6 +27,7 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm<z.infer<typeof registerSchemaZ>>({
     resolver: zodResolver(registerSchemaZ)
@@ -68,7 +69,7 @@ export default function RegisterPage() {
             name='email'
             placeholder='Ex: linh@gmail.com'
             register={register}
-            Icon={MdPerson}
+            Icon={AiOutlineMail}
             error={errors.email?.message}
           />
 
@@ -82,20 +83,22 @@ export default function RegisterPage() {
               error={errors.password?.message}
             />
 
-            <span
-              onClick={() =>
-                setShow({
-                  ...show,
-                  password: !show.password
-                })
-              }
-            >
-              {show.password ? (
-                <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
-              ) : (
-                <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
-              )}
-            </span>
+            {watch('password') && (
+              <span
+                onClick={() =>
+                  setShow({
+                    ...show,
+                    password: !show.password
+                  })
+                }
+              >
+                {show.password ? (
+                  <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
+                ) : (
+                  <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
+                )}
+              </span>
+            )}
           </div>
           <div className='relative'>
             <InputField
@@ -106,21 +109,22 @@ export default function RegisterPage() {
               Icon={AiFillUnlock}
               error={errors.confirmPassword?.message}
             />
-
-            <span
-              onClick={() =>
-                setShow({
-                  ...show,
-                  confirmPassword: !show.confirmPassword
-                })
-              }
-            >
-              {show.confirmPassword ? (
-                <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
-              ) : (
-                <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
-              )}
-            </span>
+            {watch('confirmPassword') && (
+              <span
+                onClick={() =>
+                  setShow({
+                    ...show,
+                    confirmPassword: !show.confirmPassword
+                  })
+                }
+              >
+                {show.confirmPassword ? (
+                  <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
+                ) : (
+                  <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
+                )}
+              </span>
+            )}
           </div>
         </div>
         <button

@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AiFillEye, AiFillEyeInvisible, AiFillUnlock, AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { MdPerson } from 'react-icons/md'
+import { AiFillEye, AiFillEyeInvisible, AiFillUnlock, AiOutlineLoading3Quarters, AiOutlineMail } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { userApi } from '../apis/user.api'
@@ -19,6 +18,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm<z.infer<typeof signInSchemaZ>>({
     resolver: zodResolver(signInSchemaZ)
@@ -52,7 +52,7 @@ export default function LoginPage() {
             name='email'
             placeholder='Ex: john@gmail.com'
             register={register}
-            Icon={MdPerson}
+            Icon={AiOutlineMail}
             error={errors.email?.message}
           />
 
@@ -65,13 +65,16 @@ export default function LoginPage() {
               Icon={AiFillUnlock}
               error={errors.password?.message}
             />
-            <span onClick={() => setShow(!show)}>
-              {show ? (
-                <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
-              ) : (
-                <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
-              )}
-            </span>
+
+            {watch('password') && (
+              <span onClick={() => setShow(!show)}>
+                {show ? (
+                  <AiFillEye className='absolute right-6 top-2.5 text-3xl' />
+                ) : (
+                  <AiFillEyeInvisible className='absolute right-6 top-2.5 text-3xl' />
+                )}
+              </span>
+            )}
           </div>
         </div>
         <button
