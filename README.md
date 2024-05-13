@@ -4,6 +4,8 @@ Frontend: ReactJS, TailwindCSS
 
 Backend: ExpressJS
 
+Database: MongoDB
+
 Feature: 
 - Register
 - Login
